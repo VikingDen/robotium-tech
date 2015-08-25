@@ -76,7 +76,7 @@
 		</resources>
 	</build>
 	
-	    <distributionManagement>
+<!--	    <distributionManagement>
         <repository>
             <id>nexus-releases</id>
             <name>Nexus Release Repository</name>
@@ -87,6 +87,6 @@
             <name>Nexus Snapshot Repository</name>
             <url>http://10.128.208.148:8081/nexus/content/repositories/snapshots/</url>
         </snapshotRepository>
-    </distributionManagement>
+    </distributionManagement>-->
 
 </project>
