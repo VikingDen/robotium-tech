@@ -16,7 +16,6 @@ import com.robotium.solo.Solo;
 import android.test.ActivityInstrumentationTestCase2;
 
 public class NotePadTest extends ActivityInstrumentationTestCase2{
-	
 	private static final String MAIN_ACTIVITY_NAME 	= "com.example.android.notepad.NotesList" ;
 
 	private Solo solo;
@@ -43,13 +42,6 @@ public class NotePadTest extends ActivityInstrumentationTestCase2{
 		solo = new Solo(getInstrumentation(), getActivity());
 	}
 
-	@Override
-	public void tearDown() throws Exception {
-		//tearDown() is run after a test case has finished. 
-		//finishOpenedActivities() will finish all the activities that have been opened during the test execution.
-		solo.finishOpenedActivities();
-	}
-
 	public void testAddNote() throws Exception {
 		//Unlock the lock screen
 		solo.unlockScreen();
@@ -72,7 +64,7 @@ public class NotePadTest extends ActivityInstrumentationTestCase2{
 		assertTrue("Note 1 and/or Note 2 are not found", notesFound); 
 
 	}
-	
+
 	public void testEditNote() throws Exception {
 		// Click on the second list line
 		solo.clickInList(2); 
@@ -110,4 +102,13 @@ public class NotePadTest extends ActivityInstrumentationTestCase2{
 		//Assert that Note 2 is not found
 		assertFalse("Note 2 is found", noteFound);  
 	}
+
+    @Override
+    public void tearDown() throws Exception {
+        //tearDown() is run after a test case has finished.
+        //finishOpenedActivities() will finish all the activities
+        // that have been opened during the test execution.
+        solo.finishOpenedActivities();
+    }
+
 }

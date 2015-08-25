@@ -92,9 +92,7 @@
 				<executions>
 					<execution>
 						<id>signing</id>
-						<goals>
-							<goal>sign</goal>
-						</goals>
+						<goals><goal>sign</goal></goals>
 						<phase>package</phase>
 						<inherited>true</inherited>
 						<configuration>
