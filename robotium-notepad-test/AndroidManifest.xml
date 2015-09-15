@@ -10,10 +10,10 @@
         <uses-library android:name="android.test.runner" />
     </application>
 
-    <uses-sdk android:minSdkVersion="10" />
+    <uses-sdk android:minSdkVersion="19" />
 
     <instrumentation
-        android:name="android.test.InstrumentationTestRunner"
+        android:name="android.support.test.runner.AndroidJUnitRunner"
         android:targetPackage="com.example.android.notepad" />
 
 </manifest>

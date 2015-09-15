@@ -18,7 +18,7 @@
 
 	<properties>
 		<sourceEncoding>UTF-8</sourceEncoding>
-		<android.jar.version>4.0.1.2</android.jar.version>
+        <android.jar.version>4.4.2_r4</android.jar.version>
 		<java-version>1.7</java-version>
 		<keyFilePath>sign/debug.keystore</keyFilePath>
 		<storePassword>123456789</storePassword>
@@ -28,14 +28,8 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>com.google.android</groupId>
+			<groupId>android</groupId>
 			<artifactId>android</artifactId>
-			<version>${android.jar.version}</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>com.google.android</groupId>
-			<artifactId>android-test</artifactId>
 			<version>${android.jar.version}</version>
 			<scope>provided</scope>
 		</dependency>
@@ -110,7 +104,7 @@
 		</plugins>
 	</build>
 	
-<!--    <distributionManagement>
+    <distributionManagement>
         <repository>
             <id>nexus-releases</id>
             <name>Nexus Release Repository</name>
@@ -121,5 +115,5 @@
             <name>Nexus Snapshot Repository</name>
             <url>http://10.128.208.148:8081/nexus/content/repositories/snapshots/</url>
         </snapshotRepository>
-    </distributionManagement>-->
+    </distributionManagement>
 </project>
