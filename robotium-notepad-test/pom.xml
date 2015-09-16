@@ -27,9 +27,16 @@
 	</properties>
 
 	<dependencies>
+<!--		<dependency>
+			<groupId>com.android</groupId>
+			<artifactId>android-espresso</artifactId>
+			<version>1.0.0</version>
+			<systemPath>${project.basedir}/libs/espresso-1.1-bundled.jar</systemPath>
+			<scope>system</scope>
+		</dependency>-->
         <dependency>
             <groupId>com.tcl</groupId>
-            <artifactId>tcl-android-test</artifactId>
+            <artifactId>tcl-android-support-test</artifactId>
             <version>0.0.1</version>
         </dependency>
         <dependency>

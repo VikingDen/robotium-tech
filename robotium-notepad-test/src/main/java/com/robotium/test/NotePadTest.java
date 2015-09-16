@@ -13,11 +13,20 @@
 package com.robotium.test;
 
 import android.app.Instrumentation;
+import android.support.test.InstrumentationRegistry;
+import android.support.test.uiautomator.By;
+import android.support.test.uiautomator.BySelector;
 import android.support.test.uiautomator.UiDevice;
+import android.support.test.uiautomator.UiObject;
+import android.support.test.uiautomator.UiObject2;
+import android.support.test.uiautomator.UiSelector;
 import android.test.ActivityInstrumentationTestCase2;
+import android.widget.EditText;
 
+import com.robotium.solo.Solo;
 import com.robotium.solo.TSolo;
 import com.robotium.solo.tcl.runner.TActivityInstrumentationTestCase2;
+import com.tcl.uiautomator.core.USolo;
 
 
 public class NotePadTest extends TActivityInstrumentationTestCase2 {
@@ -49,23 +58,15 @@ public class NotePadTest extends TActivityInstrumentationTestCase2 {
     public void setUp() throws Exception {
         //setUp() is run before a test case is started.
         //This is where the solo object is created.
+        super.setUp();
         instrumentation = getInstrumentation() ;
-//        solo = new Solo(instrumentation , getActivity()) ;
-        solo = new TSolo(instrumentation , getActivity()) ;
-        setSolo(solo) ;
+        solo = getSolo();
+//        setSolo(solo) ;
         mDevice = UiDevice.getInstance(instrumentation);
-    }
-
-    @Override
-    public void tearDown() throws Exception {
-        //tearDown() is run after a test case has finished.
-        //finishOpenedActivities() will finish all the activities that have been opened during the test execution.
-        solo.finishOpenedActivities();
     }
 
     public void testAddNote() throws Exception {
         //Robotium code : add a new note
-
         //Unlock the lock screen
         solo.unlockScreen();
         solo.clickOnMenuItem("Add note");
@@ -82,14 +83,11 @@ public class NotePadTest extends TActivityInstrumentationTestCase2 {
 		assertTrue("Note 1 are not found", notesFound);
 
         //UiAutomator Code :
-
         solo.sleep(5000) ;
         //use UiDevice to open notification
-        System.out.println("viking flag ------------------open notification");
         mDevice.openNotification() ;
 
         //use UiDevice to go back
-        System.out.println("viking flag ------------------go back");
         solo.sleep(3000);
         mDevice.pressBack() ;
         solo.sleep(3000);
@@ -98,18 +96,21 @@ public class NotePadTest extends TActivityInstrumentationTestCase2 {
         if(mDevice != null){
             System.out.println("viking flag ---------print package name : " + mDevice.getCurrentPackageName());
         }
+        solo.sleep(3000) ;
+
+        mDevice.pressMenu() ;
+        UiObject menu_add_note = mDevice.findObject(new UiSelector().text("Add note"));
+        menu_add_note.click();
         solo.sleep(5000) ;
 
-        //Robotium Code : create a new note
-        solo.clickOnMenuItem("Add note");
+        //Robotium code
         //Assert that NoteEditor activity is opened
         solo.assertCurrentActivity("Expected NoteEditor activity", "NoteEditor");
         //In text field 0, enter Note 1
         solo.enterText(0, "Note 2");
         solo.goBack();
-        //Assert that Note 1 & Note 2 are found
-        solo.sleep(2000);
-        assertTrue("Note 2 are not found", solo.searchText("Note 2"));
 
+        //Assert that Note 1 & Note 2 are found
+        assertTrue("Note 3 are not found", solo.searchText("Note 3") );
     }
 }
