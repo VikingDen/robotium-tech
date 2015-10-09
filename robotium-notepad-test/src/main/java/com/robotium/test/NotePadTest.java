@@ -13,40 +13,24 @@
 package com.robotium.test;
 
 import android.app.Instrumentation;
-import android.support.test.InstrumentationRegistry;
-import android.support.test.uiautomator.By;
-import android.support.test.uiautomator.BySelector;
 import android.support.test.uiautomator.UiDevice;
-import android.support.test.uiautomator.UiObject;
-import android.support.test.uiautomator.UiObject2;
-import android.support.test.uiautomator.UiSelector;
-import android.test.ActivityInstrumentationTestCase2;
-import android.widget.EditText;
-
-import com.robotium.solo.Solo;
 import com.robotium.solo.TSolo;
 import com.robotium.solo.tcl.runner.TActivityInstrumentationTestCase2;
 import com.tcl.uiautomator.core.USolo;
 
 
 public class NotePadTest extends TActivityInstrumentationTestCase2 {
-
     private static final String MAIN_ACTIVITY_NAME 	= "com.example.android.notepad.NotesList" ;
-
     private TSolo solo;
-
     private static Class<?> activityClass  ;
-
-    private Instrumentation instrumentation ;
-
     private UiDevice mDevice;
+
+    private USolo uSolo ;
 
     static {
         try {
             activityClass = Class.forName(MAIN_ACTIVITY_NAME) ;
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException("MainActivity class load has failed...") ;
-        }
+        } catch (ClassNotFoundException e) { throw new RuntimeException("MainActivity class load has failed...") ;}
     }
 
     @SuppressWarnings("unchecked")
@@ -56,13 +40,11 @@ public class NotePadTest extends TActivityInstrumentationTestCase2 {
 
     @Override
     public void setUp() throws Exception {
-        //setUp() is run before a test case is started.
-        //This is where the solo object is created.
         super.setUp();
-        instrumentation = getInstrumentation() ;
         solo = getSolo();
-//        setSolo(solo) ;
+        Instrumentation instrumentation = getInstrumentation() ;
         mDevice = UiDevice.getInstance(instrumentation);
+        uSolo = USolo.getInstance(mDevice) ;
     }
 
     public void testAddNote() throws Exception {
@@ -81,26 +63,23 @@ public class NotePadTest extends TActivityInstrumentationTestCase2 {
 		boolean notesFound = solo.searchText("Note 1") ;
 		//Assert that Note 1 & Note 2 are found
 		assertTrue("Note 1 are not found", notesFound);
+        solo.sleep(5000) ;
 
         //UiAutomator Code :
-        solo.sleep(5000) ;
         //use UiDevice to open notification
         mDevice.openNotification() ;
-
         //use UiDevice to go back
         solo.sleep(3000);
         mDevice.pressBack() ;
         solo.sleep(3000);
 
         //use UiDevice get current package name
-        if(mDevice != null){
-            System.out.println("viking flag ---------print package name : " + mDevice.getCurrentPackageName());
-        }
+        String expected_package_name = "com.example.android.notepad" ;
+        String package_name = mDevice.getCurrentPackageName() ;
+        assertEquals("Current active package name is not " + expected_package_name , expected_package_name , package_name);
         solo.sleep(3000) ;
 
-        mDevice.pressMenu() ;
-        UiObject menu_add_note = mDevice.findObject(new UiSelector().text("Add note"));
-        menu_add_note.click();
+        uSolo.clickOnMenuItem("Add note");
         solo.sleep(5000) ;
 
         //Robotium code
@@ -111,6 +90,6 @@ public class NotePadTest extends TActivityInstrumentationTestCase2 {
         solo.goBack();
 
         //Assert that Note 1 & Note 2 are found
-        assertTrue("Note 3 are not found", solo.searchText("Note 3") );
+        assertTrue("Note 1 & Note 2 are not found", solo.searchText("Note 1") && solo.searchText("Note 2") );
     }
 }
